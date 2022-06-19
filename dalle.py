@@ -1,8 +1,12 @@
 import base64
 from PIL import Image
+import asyncio
+import aiohttp
 import requests
 import json
 import io
+
+url = "http://127.0.0.1:8080/dalle"
 
 def get_concat_h():
     images = [Image.open(x) for x in ['0.png', '1.png', '2.png', '3.png']]
@@ -20,8 +24,21 @@ def get_concat_h():
 
     new_im.save('result.jpg')
     
+async def asyncGetImgFromPrompt(num, prmpt):
+    reqJson = {"text" : prmpt, "num_images" : num }
+    req = json.dumps(reqJson)
+    
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, data=req) as res:
+            images = await res.json()
+            for x in range(len(images)):
+                imgData = base64.b64decode(images[x])
+                buf = io.BytesIO(imgData)
+                img = Image.open(buf)
+                img.save("{}.png".format(x), format="png")
+            get_concat_h()
+
 def getImgFromPrompt (num, prmpt):
-    url = "http://127.0.0.1:8080/dalle"
     num_imgs = num
     prompt = prmpt
     reqJson = {"text" : prompt, "num_images" : num_imgs }
@@ -44,3 +61,6 @@ def getImgFromPrompt (num, prmpt):
 def discordEntry(num, prmpt):
     getImgFromPrompt(num, prmpt)
     get_concat_h()
+    
+async def asyncDiscordEntry(num, prompt):
+    await asyncGetImgFromPrompt(num, prompt)
