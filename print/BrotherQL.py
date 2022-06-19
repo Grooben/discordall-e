@@ -5,6 +5,7 @@ from brother_ql.conversion import convert
 from brother_ql.backends.helpers import send
 from brother_ql.raster import BrotherQLRaster
 
+
 class BrotherQLPrinter:
 
     def __init__(self):
