@@ -23,10 +23,11 @@ async def generate(interaction: nextcord.Interaction, arg: str):
 @bot.slash_command(description="Try and print the image you created...")
 async def print(interaction: nextcord.Interaction, arg: str):
     await interaction.send("Generating some art for '{}', please wait...".format(arg))
+    username = interaction.user.name;
     try:
         await dalle.asyncDiscordEntry(4, arg)
         await interaction.send(file=nextcord.File('result.jpg'))
-        p = printer.resize_dalle_image_with_text('result.jpg', arg, font="print/comic.ttf")
+        p = printer.resize_dalle_image_with_text('result.jpg', arg, username, font="print/comic.ttf")
         printer.printLabel(p);
         
     except:

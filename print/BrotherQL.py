@@ -11,7 +11,7 @@ class BrotherQLPrinter:
     def __init__(self):
         pass;
 
-    def resize_dalle_image_with_text(self, path, text, font="comic.ttf", textMargin=200):
+    def resize_dalle_image_with_text(self, path, text, subtitle="", font="comic.ttf", textMargin=200):
 
         # Open the saved image
         oldIm = Image.open(path)
@@ -23,13 +23,19 @@ class BrotherQLPrinter:
 
         # Draw text underneath
         draw = ImageDraw.Draw(im);
-        font = ImageFont.truetype(font, 48);
+        font1 = ImageFont.truetype(font, 48);
         text = text
         text = f'"{text}"';
 
         # Find draw location, draw the text
-        pos = (1024 / 2, 256 + (textMargin/2));
-        draw.text(pos, text, font=font, anchor="mm", fill=(0,0,0))
+        pos = (1024 / 2, 256 + (textMargin/2) + 20);
+        draw.text(pos, text, font=font1, anchor="mm", fill=(0,0,0))
+
+        # Draw text above
+        font2 = ImageFont.truetype(font, 24);
+        text = f'{subtitle}';
+        pos = (1024 / 2, 256 + (textMargin/2) - 60);
+        draw.text(pos, text, font=font2, anchor="mm", fill=(0,0,0))
 
         # And return altered image
         return im;
