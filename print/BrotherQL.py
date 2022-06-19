@@ -32,7 +32,7 @@ class BrotherQLPrinter:
         draw.text(pos, text, font=font1, anchor="mm", fill=(0,0,0))
 
         # Draw text above
-        font2 = ImageFont.truetype(font, 24);
+        font2 = ImageFont.truetype(font, 40);
         text = f'{subtitle}';
         pos = (1024 / 2, 256 + (textMargin/2) - 60);
         draw.text(pos, text, font=font2, anchor="mm", fill=(0,0,0))
