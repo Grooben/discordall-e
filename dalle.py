@@ -2,7 +2,6 @@ import base64
 from PIL import Image
 import asyncio
 import aiohttp
-import requests
 import json
 import io
 
@@ -37,30 +36,6 @@ async def asyncGetImgFromPrompt(num, prmpt):
                 img = Image.open(buf)
                 img.save("{}.png".format(x), format="png")
             get_concat_h()
-
-def getImgFromPrompt (num, prmpt):
-    num_imgs = num
-    prompt = prmpt
-    reqJson = {"text" : prompt, "num_images" : num_imgs }
-
-    req = json.dumps(reqJson)
-
-    print(req)
-
-    res = requests.post(url, data=req)
-
-    images = res.json()
-
-    for x in range(len(images)):
-        imgData = base64.b64decode(images[x])
-        buf = io.BytesIO(imgData)
-        img = Image.open(buf)
-        # img.show()
-        img.save("{}.png".format(x), format="png")
-
-def discordEntry(num, prmpt):
-    getImgFromPrompt(num, prmpt)
-    get_concat_h()
     
 async def asyncDiscordEntry(num, prompt):
     await asyncGetImgFromPrompt(num, prompt)
