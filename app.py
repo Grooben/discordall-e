@@ -38,7 +38,7 @@ async def memeprint(interaction: nextcord.Interaction, arg: str):
     try:
         await dalle.asyncDiscordEntry(4, arg)
         await interaction.send(file=nextcord.File('result.jpg'))
-        p = printer.resize_dalle_image_with_text('result.jpg', arg, username, font="print/comic.ttf")
+        p = printer.resize_dalle_image_with_text('result.jpg', arg, username, font="ql_print/comic.ttf")
         printer.printLabel(p);
         
     except:
