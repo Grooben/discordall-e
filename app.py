@@ -9,7 +9,7 @@ load_dotenv()
 
 bot = commands.Bot()
 
-test_guild_id = 
+test_guild_id = None
 
 @bot.event
 async def on_ready():
