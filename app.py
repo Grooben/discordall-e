@@ -20,17 +20,14 @@ async def on_ready():
 async def hello(interaction: nextcord.Interaction):
     await interaction.send("Hello!")
 
-@bot.slash_command(description="Generate 4 Dall-E images from a given prompt", guild_ids=[test_guild_id])
-async def generate(interaction: nextcord.Interaction, arg: str):
-    await interaction.send("Generating art for {}".format(arg))
-    dalle.discordEntry(4, arg)
-    await interaction.send(file=nextcord.File('result.jpg'))
-
 @bot.slash_command(description="Asynchronously generates 4 Dall-E images from a given prompt (very alpha)",
                    guild_ids=[test_guild_id])
-async def asyncgenerate(interaction: nextcord.Interaction, arg: str):
+async def generate(interaction: nextcord.Interaction, arg: str):
     await interaction.send("Generating some art for '{}', please wait...".format(arg))
-    await dalle.asyncDiscordEntry(4, arg)
-    await interaction.send(file=nextcord.File('result.jpg'))
+    try:
+        await dalle.asyncDiscordEntry(4, arg)
+        await interaction.send(file=nextcord.File('result.jpg'))
+    except:
+        await interaction.send("I wasn't able to do that, I might be a bit too busy! Try again in a few seconds!")
     
 bot.run(os.getenv('DISCORD_TOKEN'))
