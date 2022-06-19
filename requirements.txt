@@ -2,3 +2,5 @@ aiohttp==3.8.1
 nextcord==2.0.0b4
 Pillow==9.1.1
 python-dotenv==0.20.0
+pyusb==1.2.1
+brother-ql==0.9.4
